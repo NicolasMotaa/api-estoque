@@ -3,9 +3,9 @@ from sqlalchemy.engine import URL
 from sqlalchemy.orm import sessionmaker
 
 url = URL.create(
-    drivername ="postgresql",
+    drivername ="postgresql+psycopg",
     username = "postgres",
-    password="",
+    password="admin123",
     host="localhost",
     database="estoque_db",
     port=5432
