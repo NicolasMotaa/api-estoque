@@ -1,8 +1,6 @@
 from sqlalchemy import Column, Integer, String, Numeric, Date
-from sqlalchemy.orm import declarative_base
-from config.db import engine
+from config.db import Base
 
-Base = declarative_base()
 
 class Produto(Base):
     __tablename__="produtos"
@@ -14,5 +12,3 @@ class Produto(Base):
     preco_venda = Column(Numeric)
     quantidade_em_estoque = Column(Integer)
     data_cadastro = Column(Date)
-
-Base.metadata.create_all(engine)
