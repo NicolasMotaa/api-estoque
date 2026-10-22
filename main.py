@@ -1,10 +1,8 @@
 from fastapi import FastAPI
-from config.db import Session
-from models.produto import Produto
+from routes.produto_route import router as produto_router
+app = FastAPI (title= "API de gerenciamento de estoque")
 
-app = FastAPI ()
+app.include_router(produto_router)
 
-@app.get("/produto")
-def get_produto():
-    return {"Hello":"Produto"}
+
 
