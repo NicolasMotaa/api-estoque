@@ -9,6 +9,7 @@ class ProdutoBase(BaseModel):
     quantidade_em_estoque: int
     categoria_id: int
     fornecedor_id: int
+    estoque_minimo: int
 
 #RequestDTO
 class ProdutoCreate(ProdutoBase):
