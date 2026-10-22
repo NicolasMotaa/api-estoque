@@ -1,6 +1,6 @@
 from fastapi import Depends
 from sqlalchemy.orm import Session
-from config.db import Session # Supondo que a Session maker esteja aqui
+from config.db import Session 
 from repositories.produto_repository import ProdutoRepository
 from services.produto_service import ProdutoService
 
