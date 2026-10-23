@@ -1,8 +1,11 @@
 from fastapi import Depends
 from sqlalchemy.orm import Session
-from config.db import Session # Supondo que a Session maker esteja aqui
+from config.db import Session 
 from repositories.produto_repository import ProdutoRepository
 from services.produto_service import ProdutoService
+from repositories.fornecedor_repository import FornecedorRepository
+from services.fornecedor_service import FornecedorService
+
 
 # Injeta a sessão do banco de dados na requisição
 def get_db():
@@ -16,3 +19,7 @@ def get_db():
 def get_produto_service(db: Session = Depends(get_db)) -> ProdutoService:
     repo = ProdutoRepository(db)
     return ProdutoService(repo)
+
+def get_fornecedor_service(db: Session = Depends(get_db)) -> FornecedorService:
+    repo = FornecedorRepository(db)
+    return FornecedorService(repo)

@@ -15,12 +15,10 @@ class Produto(Base):
     data_cadastro = Column(Date)
     estoque_minimo = Column(Integer, default=0)
 
-#adicionar após a criação das entidades Categoria e Fornecedor
-
 #    #chaves estrangeiras
-#    categoria_id = Column(Integer, ForeignKey("categorias_id"))
-#    fornecedor_id = Column(Integer, ForeignKey("fornecedores_id"))
-#
+    categoria_id = Column(Integer, ForeignKey("categorias.id"))
+    fornecedor_id = Column(Integer, ForeignKey("fornecedores.id"))
+
 #    #relacionamentos
-#    categoria = relationship("Categoria", back_populates="produtos")
-#    fornecedor = relationship("Fornecedor", back_populates="produtos")
+    categoria = relationship("Categoria", back_populates="produtos")
+    fornecedor = relationship("Fornecedor", back_populates="produtos")

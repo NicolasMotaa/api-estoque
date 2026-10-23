@@ -10,6 +10,8 @@ import os
 
 #entidades
 from models.produto import Produto
+from models.fornecedor import Fornecedor
+from models.categoria import Categoria
 
 from config.db import Base, url
 
