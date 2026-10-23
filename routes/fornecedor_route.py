@@ -39,7 +39,7 @@ def excluir_fornecedor(
 ):
     service.excluir_fornecedor(fornecedor_id)
 
-# --- Funcionalidade Avançada ---
+# Funcionalidade Avançada 
 @router.get("/{fornecedor_id}/produtos", response_model=list[ProdutoResponse])
 def listar_produtos_do_fornecedor(
     fornecedor_id: int, 
