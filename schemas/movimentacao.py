@@ -10,7 +10,7 @@ class MovimentacaoBase(BaseModel):
 class MovimentacaoCreate(MovimentacaoBase):
     pass
 
-class MovimentacaoResponse(BaseModel):
+class MovimentacaoResponse(MovimentacaoBase):
     id: int
     data: datetime
 
