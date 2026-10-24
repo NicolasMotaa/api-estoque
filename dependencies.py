@@ -39,11 +39,14 @@ def get_categoria_service(db: Session = Depends(get_db)) -> CategoriaService:
 
 def get_movimentacao_service(db: Session = Depends(get_db)):
     repo = MovimentacaoRepository(db)
-    
-    produto_repo = ProdutoRepository(db)
-    produto_service = ProdutoService(produto_repo)
-    
+
+    categoria_repo = CategoriaRepository(db)
+    categoria_service = CategoriaService(categoria_repo)
+
     fornecedor_repo = FornecedorRepository(db)
     fornecedor_service = FornecedorService(fornecedor_repo)
+    
+    produto_repo = ProdutoRepository(db)
+    produto_service = ProdutoService(produto_repo,categoria_service, fornecedor_service)
     
     return MovimentacaoService(repo, produto_service, fornecedor_service)
