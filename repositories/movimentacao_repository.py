@@ -34,6 +34,6 @@ class MovimentacaoRepository:
 
     def get_by_periodo(self, data_inicio: datetime, data_fim: datetime) -> list[Movimentacao]:
         return self.db.query(Movimentacao).filter(
-            Movimentacao.data_movimentacao >= data_inicio,
-            Movimentacao.data_movimentacao <= data_fim
+            Movimentacao.data >= data_inicio,
+            Movimentacao.data <= data_fim
         ).all()
