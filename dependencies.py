@@ -21,7 +21,13 @@ def get_db():
 # Injeta o Repository e o Service encadeados
 def get_produto_service(db: Session = Depends(get_db)) -> ProdutoService:
     repo = ProdutoRepository(db)
-    return ProdutoService(repo)
+
+    categoria_repo = CategoriaRepository(db)
+    categoria_service = CategoriaService(categoria_repo)
+
+    fornecedor_repo = FornecedorRepository(db)
+    fornecedor_service = FornecedorService(fornecedor_repo)
+    return ProdutoService(repo,categoria_service, fornecedor_service)
 
 def get_fornecedor_service(db: Session = Depends(get_db)) -> FornecedorService:
     repo = FornecedorRepository(db)

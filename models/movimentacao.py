@@ -1,6 +1,6 @@
 import enum
 from sqlalchemy import Column, Integer, Enum as SQLAlchemyEnum, DateTime, ForeignKey
-from datetime import datetime, timezone
+from datetime import datetime
 from sqlalchemy.orm import relationship
 from config.db import Base
 
@@ -17,7 +17,7 @@ class Movimentacao(Base):
     produto_id = Column(Integer, ForeignKey("produtos.id"), nullable=False)
     tipo = Column(SQLAlchemyEnum(Tipo), nullable=False)
     quantidade = Column(Integer, nullable=False)
-    data = Column(DateTime, default=lambda: datetime.now(timezone.UTC))
+    data = Column(DateTime, default= datetime.now)
 
     produto = relationship("Produto", back_populates="movimentacoes")
     
