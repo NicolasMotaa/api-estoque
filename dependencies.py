@@ -7,7 +7,8 @@ from repositories.fornecedor_repository import FornecedorRepository
 from services.fornecedor_service import FornecedorService
 from repositories.categoria_repository import CategoriaRepository
 from services.categoria_service import CategoriaService
-
+from repositories.movimentacao_repository import MovimentacaoRepository
+from services.movimentacao_service import MovimentacaoService
 
 # Injeta a sessão do banco de dados na requisição
 def get_db():
@@ -29,3 +30,14 @@ def get_fornecedor_service(db: Session = Depends(get_db)) -> FornecedorService:
 def get_categoria_service(db: Session = Depends(get_db)) -> CategoriaService:
     repo = CategoriaRepository(db)
     return CategoriaService(repo)
+
+def get_movimentacao_service(db: Session = Depends(get_db)):
+    repo = MovimentacaoRepository(db)
+    
+    produto_repo = ProdutoRepository(db)
+    produto_service = ProdutoService(produto_repo)
+    
+    fornecedor_repo = FornecedorRepository(db)
+    fornecedor_service = FornecedorService(fornecedor_repo)
+    
+    return MovimentacaoService(repo, produto_service, fornecedor_service)
