@@ -4,6 +4,7 @@ from schemas.movimentacao import MovimentacaoCreate
 from services.produto_service import ProdutoService
 from services.fornecedor_service import FornecedorService
 from models.movimentacao import Tipo
+from config.logger import logger
 
 class MovimentacaoService():
 
@@ -24,16 +25,31 @@ class MovimentacaoService():
     def registrar_movimentacao(self, movimentacao_data: MovimentacaoCreate):
         #função do produto_service verifica se o produto informado existe
         mov_produto = self.produto_service.obter_produto(movimentacao_data.produto_id)
+        
+        #Validação das regras de negócio
         if movimentacao_data.tipo == Tipo.ENTRADA:
             mov_produto.quantidade_em_estoque += movimentacao_data.quantidade
         elif movimentacao_data.tipo == Tipo.SAIDA: 
             if movimentacao_data.quantidade > mov_produto.quantidade_em_estoque:
+
+                logger.warning(
+                    f"Tentativa de saída bloqueada: Produto ID {mov_produto.id} "
+                    f"(Estoque atual: {mov_produto.quantidade_em_estoque}, Solicitado: {movimentacao_data.quantidade})"
+                )
+
                 raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                                     detail="Pedido de movimentação excedeu a quantidade em estoque do produto.")
             
             mov_produto.quantidade_em_estoque -= movimentacao_data.quantidade
 
-        return self.repo.create(movimentacao_data)
+        nova_movimentacao = self.repo.create(movimentacao_data)
+        
+        logger.info(
+            f"Movimentação registrada: {nova_movimentacao.tipo.value} de {nova_movimentacao.quantidade} "
+            f"unidade(s) para o Produto ID {mov_produto.id}. Novo estoque: {mov_produto.quantidade_em_estoque}"
+        )
+
+        return nova_movimentacao
 
     def get_all(self):
         return self.repo.get_all()
