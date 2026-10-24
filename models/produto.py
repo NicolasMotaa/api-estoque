@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Numeric, Date, ForeignKey
 from sqlalchemy.orm import relationship
 from config.db import Base
+from datetime import date
 
 
 class Produto(Base):
@@ -12,7 +13,7 @@ class Produto(Base):
     preco_custo = Column(Numeric)
     preco_venda = Column(Numeric)
     quantidade_em_estoque = Column(Integer)
-    data_cadastro = Column(Date)
+    data_cadastro = Column(Date, default= date.today)
     estoque_minimo = Column(Integer, default=0)
 
 #    #chaves estrangeiras
@@ -22,3 +23,4 @@ class Produto(Base):
 #    #relacionamentos
     categoria = relationship("Categoria", back_populates="produtos")
     fornecedor = relationship("Fornecedor", back_populates="produtos")
+    movimentacoes = relationship("Movimentacao", back_populates="produto")

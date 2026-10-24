@@ -12,6 +12,7 @@ import os
 from models.produto import Produto
 from models.fornecedor import Fornecedor
 from models.categoria import Categoria
+from models.movimentacao import Movimentacao
 
 from config.db import Base, url
 

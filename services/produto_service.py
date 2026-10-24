@@ -1,12 +1,21 @@
 from repositories.produto_repository import ProdutoRepository
 from schemas.produto import ProdutoCreate, ProdutoUpdate
 from fastapi import HTTPException, status
+from services.categoria_service import CategoriaService
+from services.fornecedor_service import FornecedorService
 
 class ProdutoService:
-    def __init__(self, repo: ProdutoRepository):
+    def __init__(self, repo: ProdutoRepository, categoria_service: CategoriaService, fornecedor_service: FornecedorService):
         self.repo = repo
+        self.categoria_service = categoria_service
+        self.fornecedor_service = fornecedor_service
 
     def criar_produto(self, produto_data: ProdutoCreate):
+
+        #verificações de existência de categoria e fornecedor. 
+        self.categoria_service.obter_categoria(produto_data.categoria_id)
+        self.fornecedor_service.obter_fornecedor(produto_data.fornecedor_id)
+
         #regra: código deve ser único
         if self.repo.get_by_codigo(produto_data.codigo):
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
@@ -30,6 +39,9 @@ class ProdutoService:
 
         return produto
 
+    def buscar_estoque_baixo(self):
+        return self.repo.get_estoque_baixo()
+    
     def atualizar_produto(self, produto_id: int, produto_data: ProdutoUpdate):
         #utiliza a função do próprio service. Em caso de erro, a exceção é lançada nela mesma.
         db_produto = self.obter_produto(produto_id)

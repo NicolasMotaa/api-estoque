@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, status
 from dependencies import get_categoria_service
 from schemas.categoria import CategoriaCreate, CategoriaResponse, CategoriaUpdate
 from services.categoria_service import CategoriaService
+from schemas.produto import ProdutoResponse
 
 router = APIRouter(prefix="/categorias", tags=["Categorias"])
 
@@ -39,7 +40,7 @@ def excluir_categoria(
     service.excluir_categoria(categoria_id)
 
 # Funcionalidade Avançada
-@router.get("/{categoria_id}/produtos", response_model=list[CategoriaResponse])
+@router.get("/{categoria_id}/produtos", response_model=list[ProdutoResponse])
 def listar_produtos_da_categoria(
     categoria_id: int,
     service: CategoriaService = Depends(get_categoria_service)
