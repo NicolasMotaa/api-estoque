@@ -10,7 +10,6 @@ Uma API RESTful robusta desenvolvida para gestão de estoque, controle de fornec
 * **ORM & Migrations:** SQLAlchemy + Alembic
 * **Validação de Dados:** Pydantic V2
 * **Testes Automatizados:** Pytest e `unittest.mock`
-* **Segurança:** Autenticação JWT e RBAC (Role-Based Access Control)
 
 ## > Arquitetura e Padrões de Projeto
 
